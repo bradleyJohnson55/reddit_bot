@@ -2,7 +2,9 @@ import praw
 import config
 import time
 import random 
+import prawcore
 
+BLACKLIST = {"suicidewatch", "depression"}
 
 
 def botLogin():
@@ -24,16 +26,19 @@ kittenListSize = 10
 
 
 def reply(comment, str): # str = trigger
-	kittenPic = kittenList[random.randint(0, kittenListSize)]
-	comment.reply('>' + str +"\n\n[Here is a picture of a kitten to cheer you up](" + kittenPic + ")")
-	print ("\nsad person found -> " + comment.body)
-	print("Sleeping a few mins...")
-	time.sleep(200)
+	try:
+		if comment.author.name != "cheer_up_bot" and comment.subreddit.display_name.lower() not in BLACKLIST:
+			kittenPic = kittenList[random.randint(0, kittenListSize)]
+			comment.reply('>' + str +"\n\n[Here is a picture of a kitten to cheer you up](" + kittenPic + ")")
+			print ("\nsad person found -> " + comment.body)
+			time.sleep(3)
+	except Exception as e:
+		print '\n*******some sort of error*******\n'
 
 def runBot(r):
 	subreddit = r.subreddit('all')
 	comments = subreddit.comments(limit = 100)
-	print ("entering reddit and grabbing 100 most recent comments....\nsearching for sad people")
+	
 
 	
 	for comment in comments:
@@ -49,11 +54,11 @@ def runBot(r):
 			reply(comment, "i am sad")
 
 	
-	print ("no sad people found...sleeping 5 secs")
-	time.sleep(5)
+	print ("\nno sad people found...sleeping 2 secs")
+	time.sleep(2)
 
 login = botLogin()
-
+print ("entering reddit and grabbing 100 most recent comments....\nsearching for sad people")
 while True:
 	runBot(login)
 
