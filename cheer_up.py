@@ -33,7 +33,7 @@ def reply(comment, str): # str = trigger
 			print ("\nsad person found -> " + comment.body)
 			time.sleep(3)
 	except Exception as e:
-		print '\n*******some sort of error*******\n'
+		print ('\n*******some sort of error*******\n')
 
 def runBot(r):
 	subreddit = r.subreddit('all')
