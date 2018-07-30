@@ -4,8 +4,7 @@ import time
 import random 
 import prawcore
 
-BLACKLIST = {"suicidewatch", "depression"}
-
+BLACKLIST = {"suicidewatch", "depression", "petloss", "cats"}
 
 def botLogin():
 	r = praw.Reddit(username = config.username,
@@ -24,7 +23,6 @@ kittenList = ['http://freshpet.com/wp-content/uploads/2015/04/kitten.jpg',
 'https://i.redd.it/yr01t7xz5rwy.jpg', 'https://i.redd.it/2af88hhk9dsy.jpg', 'https://i.redd.it/0tx76hl4v5ty.jpg']
 kittenListSize = 10
 
-
 def reply(comment, str): # str = trigger
 	try:
 		if comment.author.name != "cheer_up_bot" and comment.subreddit.display_name.lower() not in BLACKLIST:
@@ -38,9 +36,7 @@ def reply(comment, str): # str = trigger
 def runBot(r):
 	subreddit = r.subreddit('all')
 	comments = subreddit.comments(limit = 100)
-	
-
-	
+		
 	for comment in comments:
 		if ":(" in comment.body:
 			reply(comment, ':(')
@@ -52,7 +48,6 @@ def runBot(r):
 			reply(comment, "i'm sad ")
 		elif "i am sad " in comment.body:
 			reply(comment, "i am sad")
-
 	
 	print ("\nno sad people found...sleeping 2 secs")
 	time.sleep(2)
