@@ -3,6 +3,7 @@ import config
 import time
 import random 
 import prawcore
+import kitten_pics
 
 BLACKLIST = {"suicidewatch", "depression", "petloss", "cats"}
 
@@ -22,7 +23,7 @@ def reply(comment, str): # str = trigger
 			print ("\nsad person found -> " + comment.body)
 			time.sleep(3)
 	except Exception as e:
-		print ('\n*******some sort of error*******\n')
+		print ('\n*******error*******\n')
 
 def runBot(r):
 	subreddit = r.subreddit('all')
@@ -40,11 +41,12 @@ def runBot(r):
 		elif "i am sad " in comment.body:
 			reply(comment, "i am sad")
 	
-	print ("\nno sad people found...sleeping 2 secs")
+	print ("\n...")
 	time.sleep(2)
 
 login = botLogin()
 print ("entering reddit and grabbing 100 most recent comments....\nsearching for sad people")
+
 while True:
 	runBot(login)
 
